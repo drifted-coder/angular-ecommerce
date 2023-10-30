@@ -1,0 +1,12 @@
+<div class="menu-sidebar-content js-scrollbar1">
+    <nav class="navbar-sidebar">
+      <ul class="list-unstyled navbar-list">
+        <li *ngFor="let tempProductcategory of productCategories">
+          <!-- this will pass the id to the routes of appmodule.ts  -->
+          <a routerLink="/category/{{ tempProductcategory.id }}" routerLinkActive="active-link">
+              {{tempProductcategory.categoryName}}
+        </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
