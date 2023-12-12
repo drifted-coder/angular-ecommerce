@@ -30,11 +30,17 @@ export class CheckoutComponent implements OnInit {
   billingAddressStates: State[] = [];
 
   checkOutFormGroup: FormGroup;
+
+  storage: Storage = sessionStorage;
+
   // this will help us in creating form with its inbuild functions
   constructor(private formBuilder: FormBuilder, private luv2ShopFormService: Luv2ShopFormService, private CartService: CartService, private checkoutService: CheckoutService, private router: Router) { }
 
   ngOnInit(): void {
     this.reviewCartDetails();
+
+    // retrieve data from the browser storage
+    const theEmail = JSON.parse(sessionStorage.getItem("userEmail")!);
 
     this.checkOutFormGroup = this.formBuilder.group({
       // this one is for grouping the details of customer, here customer is the form group name
@@ -47,7 +53,7 @@ export class CheckoutComponent implements OnInit {
                                     [Validators.required, 
                                     Validators.minLength(2), 
                                     Luv2ShopValidators.notOnlyWhiteSpace]),
-        email: new FormControl('',
+        email: new FormControl(theEmail ? theEmail : '',
                                     [Validators.required, 
                                     Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
       }),
