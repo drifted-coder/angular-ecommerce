@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Product } from '../common/product';
 import { map } from 'rxjs/operators';
 import { ProductCategory } from '../common/product-category';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,9 @@ import { ProductCategory } from '../common/product-category';
 export class ProductService {
 
   // adding the url to fetch the data from the db 
-  private baseUrl = "http://localhost:8080/api/products";
+  private baseUrl = environment.luv2shopApiUrl + "/products";
 
-  private categoryUrl = "http://localhost:8080/api/product-category";
+  private categoryUrl = environment.luv2shopApiUrl + "/product-category";
   // injecting http client 
   constructor(private httpClient: HttpClient) { }
 
@@ -30,7 +31,7 @@ export class ProductService {
                           thecategoryId: number): Observable<GetResponseProducts>{
 
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${thecategoryId}`+`&page=${thePage}&size=${thePageSize}`;
-
+    console.log(`getting products from - ${searchUrl}`);
     return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
 
